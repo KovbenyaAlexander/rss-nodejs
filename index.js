@@ -3,6 +3,7 @@ import { stdin as input, stdout as output } from "node:process";
 import os from "os";
 import up from "./src/up.js";
 import cd from "./src/cd.js";
+import ls from "./src/ls.js";
 /*
   npm run start -- --username=your_username
 */
@@ -15,7 +16,7 @@ const username = process.argv[2].split(`=`)[1];
 console.log(`Welcome to the File Manager, ${username}!`);
 console.log(`You are currently in ${currentDirectory}`);
 
-rl.on("line", (input) => {
+rl.on("line", async (input) => {
   const command = input.trim().split(` `)[0];
   const firstParam = input.trim().split(` `)[1];
   const secondParam = input.trim().split(` `)[2];
@@ -27,7 +28,11 @@ rl.on("line", (input) => {
       break;
     }
     case "cd": {
-      currentDirectory = cd(currentDirectory, firstParam);
+      currentDirectory = await cd(currentDirectory, firstParam);
+      break;
+    }
+    case "ls": {
+      ls(currentDirectory);
       break;
     }
     default:
