@@ -8,6 +8,8 @@ import cat from "./src/cat.js";
 import add from "./src/add.js";
 // import cp from "./src/cp.js";
 import rn from "./src/rn.js";
+import rm from "./src/rm.js";
+
 /*
   npm run start -- --username=your_username
 */
@@ -53,6 +55,10 @@ rl.on("line", async (input) => {
     }
     case "rn": {
       rn(currentDirectory, firstParam, secondParam);
+      break;
+    }
+    case "rm": {
+      rm(currentDirectory, firstParam);
       break;
     }
     case "": {
