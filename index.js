@@ -4,6 +4,7 @@ import os from "os";
 import up from "./src/up.js";
 import cd from "./src/cd.js";
 import ls from "./src/ls.js";
+import cat from "./src/cat.js";
 /*
   npm run start -- --username=your_username
 */
@@ -33,6 +34,10 @@ rl.on("line", async (input) => {
     }
     case "ls": {
       ls(currentDirectory);
+      break;
+    }
+    case "cat": {
+      cat(currentDirectory, firstParam);
       break;
     }
     default:
