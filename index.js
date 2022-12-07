@@ -2,6 +2,7 @@ import * as readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import os from "os";
 import up from "./src/up.js";
+import cd from "./src/cd.js";
 /*
   npm run start -- --username=your_username
 */
@@ -23,6 +24,10 @@ rl.on("line", (input) => {
     case "up": {
       currentDirectory = up(currentDirectory);
       console.log(`You are currently in ${currentDirectory}`);
+      break;
+    }
+    case "cd": {
+      currentDirectory = cd(currentDirectory, firstParam);
       break;
     }
     default:
