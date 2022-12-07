@@ -5,6 +5,7 @@ import up from "./src/up.js";
 import cd from "./src/cd.js";
 import ls from "./src/ls.js";
 import cat from "./src/cat.js";
+import add from "./src/add.js";
 /*
   npm run start -- --username=your_username
 */
@@ -40,11 +41,19 @@ rl.on("line", async (input) => {
       cat(currentDirectory, firstParam);
       break;
     }
+    case "add": {
+      add(currentDirectory, firstParam);
+      break;
+    }
+    case "": {
+      console.log(`You are currently in ${currentDirectory}`);
+      break;
+    }
     default:
-      console.log(`Incorrect command.`);
+      console.log("Incorrect command.");
   }
 });
 
-rl.on(`close`, () => {
+rl.on("close", () => {
   console.log(`Thank you for using File Manager, ${username} goodbye!`);
 });
