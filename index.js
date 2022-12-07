@@ -6,6 +6,8 @@ import cd from "./src/cd.js";
 import ls from "./src/ls.js";
 import cat from "./src/cat.js";
 import add from "./src/add.js";
+// import cp from "./src/cp.js";
+import rn from "./src/rn.js";
 /*
   npm run start -- --username=your_username
 */
@@ -43,6 +45,14 @@ rl.on("line", async (input) => {
     }
     case "add": {
       add(currentDirectory, firstParam);
+      break;
+    }
+    case "cp": {
+      // cp(currentDirectory, firstParam, secondParam);
+      break;
+    }
+    case "rn": {
+      rn(currentDirectory, firstParam, secondParam);
       break;
     }
     case "": {
