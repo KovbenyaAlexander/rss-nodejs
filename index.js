@@ -11,6 +11,7 @@ import rn from "./src/rn.js";
 import rm from "./src/rm.js";
 import osInfo from "./src/os.js";
 import hash from "./src/hash.js";
+import mv from "./src/mv.js";
 import { compress, decompress } from "./src/compress.js";
 
 /*
@@ -64,6 +65,10 @@ rl.on("line", async (input) => {
     }
     case "rm": {
       rm(currentDirectory, firstParam);
+      break;
+    }
+    case "mv": {
+      mv(currentDirectory, firstParam, secondParam);
       break;
     }
     case "os": {
