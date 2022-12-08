@@ -6,6 +6,7 @@ import { pipeline } from "stream";
 const cp = async (currentDirectory, pathToFile, pathToDest) => {
   try {
     if (!pathToFile || !pathToDest) {
+      console.log(`if`);
       console.log("\n Incorrect command \n");
       return;
     }
@@ -21,26 +22,29 @@ const cp = async (currentDirectory, pathToFile, pathToDest) => {
       absPathToDest = path.join(currentDirectory, pathToDest);
     }
 
+    const copyName = path.basename(absPathToFile);
+
     if (!(await isFolderExist(absPathToFile))) {
-      console.log("\n File for compress doesnt exist \n");
+      console.log("\n File for copy doesnt exist \n");
       return;
     }
 
-    if (await isFolderExist(absPathToDest)) {
+    if (await isFolderExist(`${absPathToDest}/${copyName}`)) {
       console.log("\n Destination file already exists \n");
       return;
     }
 
     const rs = createReadStream(absPathToFile);
-    const ws = createWriteStream(absPathToDest);
+    const ws = createWriteStream(`${absPathToDest}/${copyName}`);
 
     pipeline(rs, ws, (err) => {
       if (err) {
+        console.log(`pipeline err`);
         console.log(err);
       }
     });
     console.log("\n File copied successfully \n");
-  } catch {
+  } catch (e) {
     console.log("\n Incorrect command \n");
   }
 };
