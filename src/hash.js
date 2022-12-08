@@ -11,7 +11,7 @@ const hash = async (currentDirectory, pathToFile) => {
         const hash = createHmac("sha256", content).digest("hex");
         console.log("\n" + hash + "\n");
       } else {
-        console.log(`file not found`);
+        console.log(`\nFile not found\n`);
       }
     } else {
       if (await isFolderExist(`${currentDirectory}/${pathToFile}`)) {
@@ -24,9 +24,9 @@ const hash = async (currentDirectory, pathToFile) => {
       }
     }
   } catch {
-    console.log(`file not found`);
+    console.log("\nfile not found\n");
   } finally {
-    console.log(`You are currently in ${currentDirectory}`);
+    console.log(`\nYou are currently in ${currentDirectory}\n`);
   }
 };
 

@@ -5,17 +5,17 @@ import path from "path";
 const add = async (directory, fileName) => {
   if (path.isAbsolute(fileName)) {
     if (await isFolderExist(`${fileName}`)) {
-      console.log("File already exists");
+      console.log("\nFile already exists\n");
     } else {
       appendFile(`${fileName}`, "");
-      console.log("File created successfully");
+      console.log("\nFile created successfully\n");
     }
   } else {
     if (await isFolderExist(`${directory}/${fileName}`)) {
-      console.log("File already exists");
+      console.log("\nFile already exists\n");
     } else {
       appendFile(`${directory}/${fileName}`, "");
-      console.log("File created successfully");
+      console.log("\nFile created successfully\n");
     }
   }
 };

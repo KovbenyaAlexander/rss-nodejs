@@ -7,7 +7,7 @@ import { unlink } from "node:fs/promises";
 const mv = async (currentDirectory, pathToFile, pathToDest) => {
   try {
     if (!pathToFile || !pathToDest) {
-      console.log("\n Incorrect command \n");
+      console.log("\nIncorrect command\n");
       return;
     }
 
@@ -25,12 +25,12 @@ const mv = async (currentDirectory, pathToFile, pathToDest) => {
     const copyName = path.basename(absPathToFile);
 
     if (!(await isFolderExist(absPathToFile))) {
-      console.log("\n File for move doesnt exist \n");
+      console.log("\nFile for move doesnt exist\n");
       return;
     }
 
     if (await isFolderExist(`${absPathToDest}/${copyName}`)) {
-      console.log("\n Destination file already exists \n");
+      console.log("\nDestination file already exists\n");
       return;
     }
 
@@ -43,13 +43,13 @@ const mv = async (currentDirectory, pathToFile, pathToDest) => {
       }
     });
 
-    ws.on(`close`, () => {
+    ws.on("close", () => {
       unlink(absPathToFile);
     });
 
-    console.log("\n File moved successfully \n");
+    console.log("\nFile moved successfully\n");
   } catch (e) {
-    console.log("\n Incorrect command \n");
+    console.log("\nIncorrect command\n");
   }
 };
 

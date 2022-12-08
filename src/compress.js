@@ -22,12 +22,12 @@ const compress = async (currentDirectory, pathToFile, pathToDest) => {
   }
 
   if (!(await isFolderExist(absPathToFile))) {
-    console.log("\n File for compress doesnt exist \n");
+    console.log("\nFile for compress doesnt exist\n");
     return;
   }
 
   if (await isFolderExist(absPathToDest)) {
-    console.log("\n Destination file already exists \n");
+    console.log("\nDestination file already exists\n");
     return;
   }
 
@@ -40,7 +40,7 @@ const compress = async (currentDirectory, pathToFile, pathToDest) => {
       console.log(err);
     }
   });
-  console.log("\n File compressed successfully \n");
+  console.log("\nFile compressed successfully\n");
 };
 
 const decompress = async (currentDirectory, pathToFile, pathToDest) => {
@@ -56,12 +56,12 @@ const decompress = async (currentDirectory, pathToFile, pathToDest) => {
   }
 
   if (!(await isFolderExist(absPathToFile))) {
-    console.log("\n File for compress doesnt exist \n");
+    console.log("\nFile for compress doesnt exist\n");
     return;
   }
 
   if (await isFolderExist(absPathToDest)) {
-    console.log("\n Destination file already exists \n");
+    console.log("\nDestination file already exists\n");
     return;
   }
 
@@ -74,7 +74,7 @@ const decompress = async (currentDirectory, pathToFile, pathToDest) => {
       console.log(err);
     }
   });
-  console.log("\n File decompressed successfully \n");
+  console.log("\nFile decompressed successfully\n");
 };
 
 export { compress, decompress };

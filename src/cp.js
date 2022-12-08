@@ -6,8 +6,7 @@ import { pipeline } from "stream";
 const cp = async (currentDirectory, pathToFile, pathToDest) => {
   try {
     if (!pathToFile || !pathToDest) {
-      console.log(`if`);
-      console.log("\n Incorrect command \n");
+      console.log("\nIncorrect command\n");
       return;
     }
 
@@ -25,12 +24,12 @@ const cp = async (currentDirectory, pathToFile, pathToDest) => {
     const copyName = path.basename(absPathToFile);
 
     if (!(await isFolderExist(absPathToFile))) {
-      console.log("\n File for copy doesnt exist \n");
+      console.log("\nFile for copy doesnt exist\n");
       return;
     }
 
     if (await isFolderExist(`${absPathToDest}/${copyName}`)) {
-      console.log("\n Destination file already exists \n");
+      console.log("\nDestination file already exists\n");
       return;
     }
 
@@ -39,13 +38,12 @@ const cp = async (currentDirectory, pathToFile, pathToDest) => {
 
     pipeline(rs, ws, (err) => {
       if (err) {
-        console.log(`pipeline err`);
         console.log(err);
       }
     });
-    console.log("\n File copied successfully \n");
+    console.log("\nFile copied successfully\n");
   } catch (e) {
-    console.log("\n Incorrect command \n");
+    console.log("\nIncorrect command\n");
   }
 };
 

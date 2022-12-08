@@ -16,6 +16,8 @@ const ls = async (directory) => {
   }
 
   console.table([...folders.sort(), ...files.sort()]);
+
+  console.log(`\nYou are currently in ${directory}\n`);
 };
 
 export default ls;

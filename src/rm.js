@@ -6,19 +6,19 @@ const rm = async (currentDirectory, fileName, newName) => {
   if (path.isAbsolute(fileName)) {
     if (await isFolderExist(fileName)) {
       unlink(fileName, path.join(fileName));
-      console.log("file deleted successfully");
+      console.log("\nFile deleted successfully\n");
     } else {
-      console.log("File doesnt exists");
+      console.log("\nFile doesnt exists\n");
     }
   } else {
     if (await isFolderExist(`${currentDirectory}/${fileName}`)) {
       unlink(`${currentDirectory}/${fileName}`, `${currentDirectory}/${newName}`);
-      console.log("file deleted successfully");
+      console.log("\nFile deleted successfully\n");
     } else {
-      console.log("File doesnt exists");
+      console.log("\nFile doesnt exists\n");
     }
   }
-  console.log(`You are currently in ${currentDirectory}`);
+  console.log(`\nYou are currently in ${currentDirectory}\n`);
 };
 
 export default rm;

@@ -36,7 +36,6 @@ rl.on("line", async (input) => {
   switch (command) {
     case "up": {
       currentDirectory = up(currentDirectory);
-      console.log(`You are currently in ${currentDirectory}`);
       break;
     }
     case "cd": {

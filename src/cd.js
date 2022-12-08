@@ -5,7 +5,7 @@ const cd = async (currentDirectory, nextDir) => {
   try {
     if (!nextDir) {
       console.log("\n Incorrect path \n");
-      console.log(`You are currently in ${currentDirectory}`);
+      console.log(`\nYou are currently in ${currentDirectory}\n`);
       return currentDirectory;
     }
 
@@ -16,16 +16,16 @@ const cd = async (currentDirectory, nextDir) => {
 
     absolutePath = path.normalize(absolutePath);
     if (await isDirectory(absolutePath)) {
-      console.log(`You are currently in ${absolutePath}`);
+      console.log(`\nYou are currently in ${absolutePath}\n`);
       return absolutePath;
     } else {
-      console.log("Incorrect path");
-      console.log(`You are currently in ${currentDirectory}`);
+      console.log("\nIncorrect path");
+      console.log(`\nYou are currently in ${currentDirectory}\n`);
       return currentDirectory;
     }
   } catch (e) {
-    console.log("Incorrect command");
-    console.log(`You are currently in ${currentDirectory}`);
+    console.log("\nIncorrect command\n");
+    console.log(`\nYou are currently in ${currentDirectory}\n`);
     return currentDirectory;
   }
 };
