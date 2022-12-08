@@ -11,6 +11,7 @@ import rn from "./src/rn.js";
 import rm from "./src/rm.js";
 import osInfo from "./src/os.js";
 import hash from "./src/hash.js";
+import { compress, decompress } from "./src/compress.js";
 
 /*
   npm run start -- --username=your_username
@@ -69,6 +70,14 @@ rl.on("line", async (input) => {
     }
     case "hash": {
       hash(currentDirectory, firstParam);
+      break;
+    }
+    case "compress": {
+      compress(currentDirectory, firstParam, secondParam);
+      break;
+    }
+    case "decompress": {
+      decompress(currentDirectory, firstParam, secondParam);
       break;
     }
     case "": {
