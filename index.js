@@ -26,9 +26,11 @@ console.log(`Welcome to the File Manager, ${username}!`);
 console.log(`You are currently in ${currentDirectory}`);
 
 rl.on("line", async (input) => {
-  const command = input.trim().split(` `)[0];
-  const firstParam = input.trim().split(` `)[1];
-  const secondParam = input.trim().split(` `)[2];
+  const withoutExtraSpaces = input.replace(/\s+/g, " ").trim();
+
+  const command = withoutExtraSpaces.trim().split(` `)[0];
+  const firstParam = withoutExtraSpaces.trim().split(` `)[1];
+  const secondParam = withoutExtraSpaces.trim().split(` `)[2];
 
   switch (command) {
     case "up": {
