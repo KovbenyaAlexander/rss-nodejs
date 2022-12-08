@@ -9,6 +9,7 @@ import add from "./src/add.js";
 // import cp from "./src/cp.js";
 import rn from "./src/rn.js";
 import rm from "./src/rm.js";
+import osInfo from "./src/os.js";
 
 /*
   npm run start -- --username=your_username
@@ -59,6 +60,10 @@ rl.on("line", async (input) => {
     }
     case "rm": {
       rm(currentDirectory, firstParam);
+      break;
+    }
+    case "os": {
+      osInfo(currentDirectory, firstParam);
       break;
     }
     case "": {
