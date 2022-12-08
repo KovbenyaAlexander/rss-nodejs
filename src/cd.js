@@ -1,22 +1,32 @@
 import path from "path";
-import { isFolderExist } from "./utils.js";
+import { isDirectory } from "./utils.js";
 
-const cd = async (currentDir, nextDir) => {
-  if (path.isAbsolute(nextDir)) {
-    if (await isFolderExist(nextDir)) {
-      console.log(`You are currently in ${nextDir}`);
-      return nextDir;
-    } else {
-      console.log(`Folder doesnt exist`);
+const cd = async (currentDirectory, nextDir) => {
+  try {
+    if (!nextDir) {
+      console.log("\n Incorrect path \n");
+      console.log(`You are currently in ${currentDirectory}`);
+      return currentDirectory;
     }
-  } else {
-    if (await isFolderExist(`${currentDir}/${nextDir}`)) {
-      const newPath = path.join(currentDir, nextDir);
-      console.log(`You are currently in ${newPath}`);
-      return newPath;
-    } else {
-      console.log(`Folder doesnt exist`);
+
+    let absolutePath = nextDir;
+    if (!path.isAbsolute(nextDir)) {
+      absolutePath = path.join(currentDirectory, nextDir);
     }
+
+    absolutePath = path.normalize(absolutePath);
+    if (await isDirectory(absolutePath)) {
+      console.log(`You are currently in ${absolutePath}`);
+      return absolutePath;
+    } else {
+      console.log("Incorrect path");
+      console.log(`You are currently in ${currentDirectory}`);
+      return currentDirectory;
+    }
+  } catch (e) {
+    console.log("Incorrect command");
+    console.log(`You are currently in ${currentDirectory}`);
+    return currentDirectory;
   }
 };
 
