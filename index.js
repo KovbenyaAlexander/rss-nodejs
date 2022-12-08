@@ -10,6 +10,7 @@ import add from "./src/add.js";
 import rn from "./src/rn.js";
 import rm from "./src/rm.js";
 import osInfo from "./src/os.js";
+import hash from "./src/hash.js";
 
 /*
   npm run start -- --username=your_username
@@ -64,6 +65,10 @@ rl.on("line", async (input) => {
     }
     case "os": {
       osInfo(currentDirectory, firstParam);
+      break;
+    }
+    case "hash": {
+      hash(currentDirectory, firstParam);
       break;
     }
     case "": {
