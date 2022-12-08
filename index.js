@@ -6,7 +6,7 @@ import cd from "./src/cd.js";
 import ls from "./src/ls.js";
 import cat from "./src/cat.js";
 import add from "./src/add.js";
-// import cp from "./src/cp.js";
+import cp from "./src/cp.js";
 import rn from "./src/rn.js";
 import rm from "./src/rm.js";
 import osInfo from "./src/os.js";
@@ -55,7 +55,7 @@ rl.on("line", async (input) => {
       break;
     }
     case "cp": {
-      // cp(currentDirectory, firstParam, secondParam);
+      cp(currentDirectory, firstParam, secondParam);
       break;
     }
     case "rn": {
