@@ -14,10 +14,6 @@ import hash from "./src/hash.js";
 import mv from "./src/mv.js";
 import { compress, decompress } from "./src/compress.js";
 
-/*
-  npm run start -- --username=your_username
-*/
-
 const rl = readline.createInterface({ input, output });
 
 let currentDirectory = os.homedir();
@@ -84,6 +80,10 @@ rl.on("line", async (input) => {
     }
     case "decompress": {
       await decompress(currentDirectory, firstParam, secondParam);
+      break;
+    }
+    case ".exit": {
+      rl.emit(`close`);
       break;
     }
     case "": {
