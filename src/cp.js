@@ -42,6 +42,8 @@ const cp = async (currentDirectory, pathToFile, pathToDest) => {
     console.log("\nFile copied successfully\n");
   } catch (e) {
     console.log("\nIncorrect command\n");
+  } finally {
+    console.log(`\nYou are currently in ${currentDirectory}\n`);
   }
 };
 

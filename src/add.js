@@ -18,7 +18,7 @@ const add = async (directory, fileName) => {
       console.log("\nFile already exists\n");
       console.log(`You are currently in ${directory}`);
     } else {
-      appendFile(`${directory}/${fileName}`, "");
+      appendFile(absolutePath, "");
       console.log("\nFile created successfully\n");
       console.log(`\nYou are currently in ${directory}\n`);
     }

@@ -91,10 +91,10 @@ rl.on("line", async (input) => {
       break;
     }
     default:
-      console.log("Incorrect command.");
+      console.log("\nIncorrect command'\n");
   }
 });
 
 rl.on("close", () => {
-  console.log(`Thank you for using File Manager, ${username} goodbye!`);
+  console.log(`\nThank you for using File Manager, ${username} goodbye!`);
 });

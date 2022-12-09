@@ -19,7 +19,7 @@ const rn = async (currentDirectory, pathToFile, newName) => {
       rename(absolutePath, path.join(absolutePath, `..`, newName));
       console.log("\nFile renamed successfully\n");
     } else {
-      console.log("\nFile doesnt exists\n");
+      console.log("\nFile doesnt exist\n");
     }
   } catch {
     console.log("\nIncorrect command\n");

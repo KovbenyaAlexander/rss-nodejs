@@ -25,7 +25,7 @@ const osInfo = (currentDirectory, param) => {
     default:
       console.log("Incorrect command.");
   }
-  console.log(`You are currently in ${currentDirectory}`);
+  console.log(`\nYou are currently in ${currentDirectory}\n`);
 };
 
 export default osInfo;

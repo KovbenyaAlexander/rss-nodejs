@@ -7,8 +7,7 @@ import { unlink } from "node:fs/promises";
 const mv = async (currentDirectory, pathToFile, pathToDest) => {
   try {
     if (!pathToFile || !pathToDest) {
-      console.log("\nIncorrect command\n");
-      return;
+      return console.log("\nIncorrect command\n");
     }
 
     let absPathToFile = pathToFile;
@@ -25,13 +24,15 @@ const mv = async (currentDirectory, pathToFile, pathToDest) => {
     const copyName = path.basename(absPathToFile);
 
     if (!(await isExist(absPathToFile))) {
-      console.log("\nFile for move doesnt exist\n");
-      return;
+      return console.log("\nFile for move doesnt exist\n");
     }
 
     if (await isExist(`${absPathToDest}/${copyName}`)) {
-      console.log("\nDestination file already exists\n");
-      return;
+      return console.log("\nDestination file already exists\n");
+    }
+
+    if (!(await isExist(absPathToDest))) {
+      return console.log("\nDestination path is incorrect\n");
     }
 
     const rs = createReadStream(absPathToFile);

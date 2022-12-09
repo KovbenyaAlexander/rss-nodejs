@@ -1,8 +1,16 @@
 import { createReadStream } from "fs";
+import path from "path";
 
-const cat = (directory, fileName) => {
+const cat = (currentDirectory, pathToFile) => {
   try {
-    const rs = createReadStream(`${directory}/${fileName}`);
+    let absolutePath = pathToFile;
+    if (!path.isAbsolute(pathToFile)) {
+      absolutePath = path.join(currentDirectory, pathToFile);
+    }
+
+    absolutePath = path.normalize(absolutePath);
+
+    const rs = createReadStream(absolutePath);
 
     rs.on(`readable`, () => {
       let chunk;
@@ -16,11 +24,11 @@ const cat = (directory, fileName) => {
     });
 
     rs.on(`close`, (e) => {
-      console.log(`\nYou are currently in ${directory}\n`);
+      console.log(`\nYou are currently in ${currentDirectory}\n`);
     });
-  } catch {
+  } catch (e) {
     console.log("\nIncorrect command\n");
-    console.log(`\nYou are currently in ${directory}\n`);
+    console.log(`\nYou are currently in ${currentDirectory}\n`);
   }
 };
 
