@@ -43,7 +43,7 @@ rl.on("line", async (input) => {
       break;
     }
     case "ls": {
-      ls(currentDirectory);
+      await ls(currentDirectory);
       break;
     }
     case "cat": {
@@ -51,7 +51,7 @@ rl.on("line", async (input) => {
       break;
     }
     case "add": {
-      add(currentDirectory, firstParam);
+      await add(currentDirectory, firstParam);
       break;
     }
     case "cp": {
@@ -59,11 +59,11 @@ rl.on("line", async (input) => {
       break;
     }
     case "rn": {
-      rn(currentDirectory, firstParam, secondParam);
+      await rn(currentDirectory, firstParam, secondParam);
       break;
     }
     case "rm": {
-      rm(currentDirectory, firstParam);
+      await rm(currentDirectory, firstParam);
       break;
     }
     case "mv": {
@@ -75,15 +75,15 @@ rl.on("line", async (input) => {
       break;
     }
     case "hash": {
-      hash(currentDirectory, firstParam);
+      await hash(currentDirectory, firstParam);
       break;
     }
     case "compress": {
-      compress(currentDirectory, firstParam, secondParam);
+      await compress(currentDirectory, firstParam, secondParam);
       break;
     }
     case "decompress": {
-      decompress(currentDirectory, firstParam, secondParam);
+      await decompress(currentDirectory, firstParam, secondParam);
       break;
     }
     case "": {

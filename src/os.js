@@ -22,6 +22,8 @@ const osInfo = (currentDirectory, param) => {
       console.log("\n" + os.arch() + "\n");
       break;
     }
+    default:
+      console.log("Incorrect command.");
   }
   console.log(`You are currently in ${currentDirectory}`);
 };

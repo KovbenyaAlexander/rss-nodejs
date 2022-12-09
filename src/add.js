@@ -1,22 +1,30 @@
-import { isFolderExist } from "./utils.js";
+import { isExist } from "./utils.js";
 import { appendFile } from "node:fs/promises";
 import path from "path";
 
 const add = async (directory, fileName) => {
-  if (path.isAbsolute(fileName)) {
-    if (await isFolderExist(`${fileName}`)) {
-      console.log("\nFile already exists\n");
-    } else {
-      appendFile(`${fileName}`, "");
-      console.log("\nFile created successfully\n");
+  try {
+    if (!fileName) {
+      return console.log("\nIncorrect command\n");
     }
-  } else {
-    if (await isFolderExist(`${directory}/${fileName}`)) {
+
+    let absolutePath = fileName;
+    if (!path.isAbsolute(fileName)) {
+      absolutePath = path.join(directory, fileName);
+    }
+    absolutePath = path.normalize(absolutePath);
+
+    if (await isExist(absolutePath)) {
       console.log("\nFile already exists\n");
+      console.log(`You are currently in ${directory}`);
     } else {
       appendFile(`${directory}/${fileName}`, "");
       console.log("\nFile created successfully\n");
+      console.log(`\nYou are currently in ${directory}\n`);
     }
+  } catch {
+    console.log("\nIncorrect command\n");
+    console.log(`\nYou are currently in ${directory}\n`);
   }
 };
 

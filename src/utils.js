@@ -1,6 +1,6 @@
 import { access, constants, readdir, lstat } from "node:fs/promises";
 
-export async function isFolderExist(path) {
+export async function isExist(path) {
   try {
     const res = await access(path);
     return true;

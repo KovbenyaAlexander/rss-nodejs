@@ -1,6 +1,6 @@
 import path from "path";
 import { createReadStream, createWriteStream } from "fs";
-import { isFolderExist } from "./utils.js";
+import { isExist } from "./utils.js";
 import { pipeline } from "stream";
 import { unlink } from "node:fs/promises";
 
@@ -24,12 +24,12 @@ const mv = async (currentDirectory, pathToFile, pathToDest) => {
 
     const copyName = path.basename(absPathToFile);
 
-    if (!(await isFolderExist(absPathToFile))) {
+    if (!(await isExist(absPathToFile))) {
       console.log("\nFile for move doesnt exist\n");
       return;
     }
 
-    if (await isFolderExist(`${absPathToDest}/${copyName}`)) {
+    if (await isExist(`${absPathToDest}/${copyName}`)) {
       console.log("\nDestination file already exists\n");
       return;
     }
@@ -39,7 +39,7 @@ const mv = async (currentDirectory, pathToFile, pathToDest) => {
 
     pipeline(rs, ws, (err) => {
       if (err) {
-        console.log(err);
+        console.log("\nIncorrect command\n");
       }
     });
 
@@ -50,6 +50,8 @@ const mv = async (currentDirectory, pathToFile, pathToDest) => {
     console.log("\nFile moved successfully\n");
   } catch (e) {
     console.log("\nIncorrect command\n");
+  } finally {
+    console.log(`You are currently in ${currentDirectory}`);
   }
 };
 

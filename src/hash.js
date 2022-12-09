@@ -1,4 +1,4 @@
-import { isFolderExist } from "./utils.js";
+import { isExist } from "./utils.js";
 import path from "path";
 import { readFile } from "node:fs/promises";
 import { createHmac } from "node:crypto";
@@ -6,7 +6,7 @@ import { createHmac } from "node:crypto";
 const hash = async (currentDirectory, pathToFile) => {
   try {
     if (path.isAbsolute(pathToFile)) {
-      if (await isFolderExist(pathToFile)) {
+      if (await isExist(pathToFile)) {
         const content = await readFile(pathToFile, { encoding: "utf-8" });
         const hash = createHmac("sha256", content).digest("hex");
         console.log("\n" + hash + "\n");
@@ -14,7 +14,7 @@ const hash = async (currentDirectory, pathToFile) => {
         console.log(`\nFile not found\n`);
       }
     } else {
-      if (await isFolderExist(`${currentDirectory}/${pathToFile}`)) {
+      if (await isExist(`${currentDirectory}/${pathToFile}`)) {
         const relativePath = path.join(currentDirectory, pathToFile);
         const content = await readFile(relativePath, { encoding: "utf-8" });
         const hash = createHmac("sha256", content).digest("hex");

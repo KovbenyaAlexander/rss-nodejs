@@ -1,6 +1,6 @@
 import path from "path";
 import { createReadStream, createWriteStream } from "fs";
-import { isFolderExist } from "./utils.js";
+import { isExist } from "./utils.js";
 import { pipeline } from "stream";
 
 const cp = async (currentDirectory, pathToFile, pathToDest) => {
@@ -23,14 +23,12 @@ const cp = async (currentDirectory, pathToFile, pathToDest) => {
 
     const copyName = path.basename(absPathToFile);
 
-    if (!(await isFolderExist(absPathToFile))) {
-      console.log("\nFile for copy doesnt exist\n");
-      return;
+    if (!(await isExist(absPathToFile))) {
+      return console.log("\nFile for copy doesnt exist\n");
     }
 
-    if (await isFolderExist(`${absPathToDest}/${copyName}`)) {
-      console.log("\nDestination file already exists\n");
-      return;
+    if (await isExist(`${absPathToDest}/${copyName}`)) {
+      return console.log("\nDestination file already exists\n");
     }
 
     const rs = createReadStream(absPathToFile);

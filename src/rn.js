@@ -1,19 +1,29 @@
-import { isFolderExist } from "./utils.js";
+import { isExist } from "./utils.js";
 import { rename } from "node:fs/promises";
 import path from "path";
 
 const rn = async (currentDirectory, pathToFile, newName) => {
-  let absolutePath = pathToFile;
-  if (!path.isAbsolute(pathToFile)) {
-    absolutePath = path.join(currentDirectory, pathToFile);
-  }
-  absolutePath = path.normalize(absolutePath);
+  try {
+    if (!pathToFile || !newName) {
+      console.log("\nIncorrect command\n");
+      return;
+    }
 
-  if (await isFolderExist(absolutePath)) {
-    rename(absolutePath, path.join(absolutePath, `..`, newName));
-    console.log("\nFile renamed successfully\n");
-  } else {
-    console.log("\nFile doesnt exists\n");
+    let absolutePath = pathToFile;
+    if (!path.isAbsolute(pathToFile)) {
+      absolutePath = path.join(currentDirectory, pathToFile);
+    }
+    absolutePath = path.normalize(absolutePath);
+
+    if (await isExist(absolutePath)) {
+      rename(absolutePath, path.join(absolutePath, `..`, newName));
+      console.log("\nFile renamed successfully\n");
+    } else {
+      console.log("\nFile doesnt exists\n");
+    }
+  } catch {
+    console.log("\nIncorrect command\n");
+    console.log(`\nYou are currently in ${currentDirectory}\n`);
   }
 };
 
