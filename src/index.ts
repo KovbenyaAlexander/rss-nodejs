@@ -1,4 +1,6 @@
 import { requestListener } from "./server";
+import balancer from "./balancer";
+import router from "./router";
 import os from "os";
 import cluster from "cluster";
 import http from "http";
@@ -9,7 +11,11 @@ const app = http.createServer(requestListener);
 if (cluster.isPrimary) {
   const cpus = os.cpus().length;
 
-  for (let CURRENT_PORT = PORT; CURRENT_PORT < PORT + cpus; CURRENT_PORT++) {
+  app.listen(PORT, () => {
+    console.log(`Master is running on port ${PORT}`);
+  });
+
+  for (let CURRENT_PORT = PORT + 1; CURRENT_PORT < PORT + cpus + 1; CURRENT_PORT++) {
     cluster.fork({ CURRENT_PORT });
   }
 } else {
@@ -17,6 +23,17 @@ if (cluster.isPrimary) {
     const PORT = process.env.CURRENT_PORT;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
+      console.log(`Worker #${cluster.worker?.id}`);
+    });
+
+    process.on("message", function (message: any) {
+      const workerId = balancer();
+
+      if (workerId === cluster.worker?.id) {
+        if (process.send) {
+          process.send({ status: 200 });
+        }
+      }
     });
   }
 }
