@@ -4,3 +4,9 @@ export type UserType = {
   age: number;
   hobbies: string[];
 };
+
+export type messageType = {
+  body?: UserType | undefined;
+  url: string | undefined;
+  method: string | undefined;
+};
