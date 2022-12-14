@@ -1,13 +1,15 @@
 import os from "os";
 
-let counter = 0;
+let counter = 1;
 const cpus = os.cpus().length;
 
 const balancer = () => {
-  counter++;
-  if (counter % cpus === 0) counter++;
-  const workerId = counter % cpus;
-  return workerId;
+  if (counter <= cpus) {
+    return counter++;
+  } else {
+    counter = 1;
+    return counter++;
+  }
 };
 
 export default balancer;

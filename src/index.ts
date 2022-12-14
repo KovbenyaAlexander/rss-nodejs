@@ -1,6 +1,4 @@
 import { requestListener } from "./server";
-import balancer from "./balancer";
-import router from "./router";
 import os from "os";
 import cluster from "cluster";
 import http from "http";
@@ -27,12 +25,8 @@ if (cluster.isPrimary) {
     });
 
     process.on("message", function (message: any) {
-      const workerId = balancer();
-
-      if (workerId === cluster.worker?.id) {
-        if (process.send) {
-          process.send({ status: 200 });
-        }
+      if (process.send) {
+        process.send({ status: 200 });
       }
     });
   }
