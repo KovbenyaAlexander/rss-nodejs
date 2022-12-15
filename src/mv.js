@@ -21,7 +21,7 @@ const mv = async (currentDirectory, pathToFile, pathToDest) => {
       absPathToDest = path.join(currentDirectory, pathToDest);
     }
 
-    const copyName = path.basename(absPathToFile);
+    const copyName = path.basename.win32(absPathToFile);
 
     if (!(await isExist(absPathToFile))) {
       return console.log("\nFile for move doesnt exist\n");
