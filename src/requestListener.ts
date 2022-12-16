@@ -5,19 +5,21 @@ import router from "./router";
 
 const requestListener = async function (req: IncomingMessage, res: ServerResponse) {
   let body: any = [];
+
   req.on("data", (chunk) => {
     body.push(chunk);
   });
 
   req.on("end", async () => {
     try {
-      body = JSON.parse(Buffer.concat(body).toString());
+      if (req.method === "POST" || req.method === "PUT") {
+        body = JSON.parse(Buffer.concat(body).toString());
+      }
     } catch {
       res.writeHead(400);
       res.end(`invalid JSON`);
       return;
     }
-
     if (cluster.workers && Object.entries(cluster.workers).length) {
       const workerId = balancer();
 
