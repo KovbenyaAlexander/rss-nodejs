@@ -31,7 +31,8 @@ const router = async (message: messageType) => {
     }
 
     case "PUT": {
-      break;
+      if (!body) return { status: 400, msg: "Invalid user data" };
+      return await UserController.updateUser(id, body);
     }
 
     case "DELETE": {
