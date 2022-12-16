@@ -5,14 +5,13 @@ import { getState, setState } from "./utils";
 class UserController {
   async addUser(user: UserType) {
     const state = await getState();
-    if (state) {
-      const newUser = {
-        id: uuidv4(),
-        ...user,
-      };
-      state.push(newUser);
-      setState(state);
-    }
+
+    const newUser = {
+      id: uuidv4(),
+      ...user,
+    };
+    state.push(newUser);
+    setState(state);
 
     return { status: 201, msg: "user created" };
   }
@@ -28,11 +27,31 @@ class UserController {
     }
 
     const state = await getState();
-    const user = state?.find((user: UserType) => user.id === id);
+    const user = state.find((user: UserType) => user.id === id);
     if (user) {
       return { status: 200, msg: JSON.stringify(user, null, 2) };
     }
     return { status: 404, msg: "user not found" };
+  }
+
+  async removeUser(id: string) {
+    if (!id) {
+      return { status: 400, msg: "ID required" };
+    }
+
+    if (!validateId(id)) {
+      return { status: 400, msg: "userId is invalid" };
+    }
+
+    const state = await getState();
+    const user = state?.find((user: UserType) => user.id === id);
+    if (!user) {
+      return { status: 404, msg: "user not found" };
+    }
+    const newState = state?.filter((user: UserType) => user.id !== id);
+    setState(newState);
+
+    return { status: 204, msg: "User deleted" };
   }
 }
 

@@ -35,7 +35,7 @@ const router = async (message: messageType) => {
     }
 
     case "DELETE": {
-      break;
+      return await UserController.removeUser(id);
     }
   }
 

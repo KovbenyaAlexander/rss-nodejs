@@ -30,18 +30,21 @@ const createJSON = async () => {
   await appendFile(PATH, "[]");
 };
 
-const getState = async (): Promise<UserType[] | undefined> => {
+const getState = async (): Promise<UserType[]> => {
+  let content = "[]";
   try {
     const PATH = "./users_db.json";
     if (await isExist(PATH)) {
-      const content = await readFile(PATH, "utf8");
+      content = await readFile(PATH, "utf8");
       if (content) {
         JSON.parse(content);
         return JSON.parse(content);
       }
     }
+    return JSON.parse(content);
   } catch {
-    console.log(`error`);
+    console.log(`get state error`);
+    return JSON.parse(content);
   }
 };
 
