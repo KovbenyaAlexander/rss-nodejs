@@ -1,3 +1,6 @@
+import { access, appendFile, unlink, readFile, writeFile } from "node:fs/promises";
+import { UserType } from "./types";
+
 const parseArgs = () => {
   const args = process.argv;
   const result: { [key: string]: string } = {};
@@ -9,4 +12,47 @@ const parseArgs = () => {
   return result;
 };
 
-export { parseArgs };
+async function isExist(path: string): Promise<boolean> {
+  try {
+    await access(path);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+const createJSON = async () => {
+  const PATH = "./users_db.json";
+  if (await isExist(PATH)) {
+    await unlink(PATH);
+  }
+
+  await appendFile(PATH, "[]");
+};
+
+const getState = async (): Promise<UserType[] | undefined> => {
+  try {
+    const PATH = "./users_db.json";
+    if (await isExist(PATH)) {
+      const content = await readFile(PATH, "utf8");
+      if (content) {
+        JSON.parse(content);
+        return JSON.parse(content);
+      }
+    }
+  } catch {
+    console.log(`error`);
+  }
+};
+
+const setState = async (state: UserType[]): Promise<boolean> => {
+  try {
+    const PATH = "./users_db.json";
+    await writeFile(PATH, JSON.stringify(state));
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export { parseArgs, isExist, createJSON, getState, setState };

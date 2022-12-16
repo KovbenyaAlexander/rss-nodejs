@@ -1,4 +1,3 @@
-// import userController from "./userController";
 import cluster from "node:cluster";
 import { IncomingMessage, ServerResponse } from "http";
 import balancer from "./balancer";
@@ -10,8 +9,14 @@ const requestListener = async function (req: IncomingMessage, res: ServerRespons
     body.push(chunk);
   });
 
-  req.on("end", () => {
-    body = JSON.parse(Buffer.concat(body).toString());
+  req.on("end", async () => {
+    try {
+      body = JSON.parse(Buffer.concat(body).toString());
+    } catch {
+      res.writeHead(400);
+      res.end(`invalid JSON`);
+      return;
+    }
 
     if (cluster.workers && Object.entries(cluster.workers).length) {
       const workerId = balancer();
@@ -26,7 +31,7 @@ const requestListener = async function (req: IncomingMessage, res: ServerRespons
         }
       }
     } else {
-      const { status, msg } = router({ body, url: req.url, method: req.method });
+      const { status, msg } = await router({ body, url: req.url, method: req.method });
       res.writeHead(status);
       res.end(msg);
     }

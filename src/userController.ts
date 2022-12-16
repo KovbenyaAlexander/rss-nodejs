@@ -1,18 +1,19 @@
-import { UserType } from "./types.js";
+import { UserType } from "./types";
 import { v4 as uuidv4 } from "uuid";
-
-const users: UserType[] = [];
+import { getState, setState } from "./utils";
 
 class UserController {
-  addUser(user: UserType) {
-    const newUser = {
-      id: uuidv4(),
-      ...user,
-    };
+  async addUser(user: UserType) {
+    const state = await getState();
+    if (state) {
+      const newUser = {
+        id: uuidv4(),
+        ...user,
+      };
+      state.push(newUser);
+      setState(state);
+    }
 
-    users.push(newUser);
-
-    console.log(users.length);
     return { status: 201, msg: "user created" };
   }
 }

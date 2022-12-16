@@ -2,7 +2,7 @@ import { messageType } from "./types";
 import UserController from "./userController";
 import { isUserValid } from "./userService";
 
-const router = (message: messageType) => {
+const router = async (message: messageType) => {
   const { method, url, body } = message;
 
   switch (method) {
@@ -10,7 +10,7 @@ const router = (message: messageType) => {
       if (!body || !isUserValid(body)) {
         return { status: 400, msg: "Invalid user data" };
       } else {
-        return UserController.addUser(body);
+        return await UserController.addUser(body);
       }
     }
     case "PUT": {
