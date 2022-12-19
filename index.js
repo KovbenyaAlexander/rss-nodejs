@@ -91,7 +91,8 @@ rl.on("line", async (input) => {
       break;
     }
     default:
-      console.log("\nIncorrect command'\n");
+      console.log("\nIncorrect command\n");
+      console.log(`You are currently in ${currentDirectory}`);
   }
 });
 
