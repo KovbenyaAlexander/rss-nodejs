@@ -35,7 +35,7 @@ const requestListener = async function (req: IncomingMessage, res: ServerRespons
     } else {
       const { status, msg } = await router({ body, url: req.url, method: req.method });
       res.writeHead(status);
-      res.end(msg);
+      res.end(JSON.stringify(msg));
     }
   });
 };

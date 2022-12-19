@@ -65,3 +65,30 @@ describe("Test scenario 1", () => {
     expect(response.body).toStrictEqual("[]");
   });
 });
+
+describe("Test scenario 2", () => {
+  it("Should get status 400 if id is not valid - GET", async () => {
+    const response = await testApi.get(`${LINK}/wrong_id`);
+    expect(response.statusCode).toBe(400);
+  });
+
+  it("Should get status 400 if user is not valid - POST", async () => {
+    const response = await testApi.post(LINK).send(JSON.stringify({ a: "a" }));
+    expect(response.statusCode).toBe(400);
+  });
+
+  it("Should get status 400 if user is not valid - PUT", async () => {
+    const response = await testApi.put(LINK).send(JSON.stringify({ a: "a" }));
+    expect(response.statusCode).toBe(400);
+  });
+
+  it("Should get status 400 if userId is not valid - DELETE", async () => {
+    const response = await testApi.delete(`${LINK}/wrong_userid`);
+    expect(response.statusCode).toBe(400);
+  });
+
+  it("Should get status 404 if user not found - DELETE", async () => {
+    const response = await testApi.delete(`${LINK}/11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000`);
+    expect(response.statusCode).toBe(404);
+  });
+});
