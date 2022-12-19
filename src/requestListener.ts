@@ -5,6 +5,7 @@ import router from "./router";
 
 const requestListener = async function (req: IncomingMessage, res: ServerResponse) {
   let body: any = [];
+  res.setHeader("Content-Type", "application/json");
 
   req.on("data", (chunk) => {
     body.push(chunk);
@@ -22,7 +23,6 @@ const requestListener = async function (req: IncomingMessage, res: ServerRespons
     }
     if (cluster.workers && Object.entries(cluster.workers).length) {
       const workerId = balancer();
-
       for (const worker of Object.values(cluster.workers)) {
         if (worker?.id === workerId) {
           worker?.send({ body, url: req.url, method: req.method });

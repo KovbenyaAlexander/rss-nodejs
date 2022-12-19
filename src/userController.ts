@@ -13,7 +13,7 @@ class UserController {
     state.push(newUser);
     setState(state);
 
-    return { status: 201, msg: "user created" };
+    return { status: 201, msg: JSON.stringify(newUser) };
   }
 
   async getAllusers() {
