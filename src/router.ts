@@ -1,6 +1,6 @@
 import { messageType } from "./types";
-import UserController from "./userController";
-import { isUserValid } from "./userService";
+import UserController from "./users/userController";
+import { isUserValid } from "./users/userService";
 
 const router = async (message: messageType) => {
   const { method, url, body } = message;

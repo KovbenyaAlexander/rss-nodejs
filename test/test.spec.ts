@@ -67,7 +67,7 @@ describe("Test scenario 1", () => {
 });
 
 describe("Test scenario 2", () => {
-  it("Should get status 400 if id is not valid - GET", async () => {
+  it("Should get status 400 if userId is not valid - GET", async () => {
     const response = await testApi.get(`${LINK}/wrong_id`);
     expect(response.statusCode).toBe(400);
   });

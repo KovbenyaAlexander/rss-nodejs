@@ -1,4 +1,4 @@
-import { UserType } from "./types";
+import { UserType } from "../types";
 
 const isUserValid = (user: UserType) => {
   if (typeof user.username !== "string" || typeof user.age !== "number") {

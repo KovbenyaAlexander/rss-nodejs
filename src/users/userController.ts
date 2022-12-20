@@ -1,6 +1,6 @@
-import { UserType } from "./types";
+import { UserType } from "../types";
 import { v4 as uuidv4, validate as validateId } from "uuid";
-import { getState, setState } from "./utils";
+import { getState, setState } from "../utils";
 
 class UserController {
   async addUser(user: UserType) {
