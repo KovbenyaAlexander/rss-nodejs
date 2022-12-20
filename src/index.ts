@@ -11,7 +11,7 @@ export const app = http.createServer(requestListener);
 const args = parseArgs();
 
 const init = async () => {
-  if (args.hasOwnProperty("multi")) {
+  if (args.hasOwnProperty("balancer")) {
     if (cluster.isPrimary) {
       await createJSON(); //create storage
       const cpus = os.cpus().length;
