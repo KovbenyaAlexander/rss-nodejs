@@ -3,7 +3,7 @@ import os from "os";
 let counter = 1;
 const cpus = os.cpus().length;
 
-const balancer = () => {
+const getNextWorkerId = () => {
   if (counter <= cpus) {
     return counter++;
   } else {
@@ -12,4 +12,4 @@ const balancer = () => {
   }
 };
 
-export default balancer;
+export default getNextWorkerId;
