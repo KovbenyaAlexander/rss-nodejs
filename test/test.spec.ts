@@ -110,7 +110,7 @@ describe("Test scenario 3", () => {
   it("Should get empty users arr", async () => {
     const response = await testApi.get(`${LINK}`);
     expect(response.statusCode).toBe(200);
-    expect(response.body).toBe("[]");
+    expect(response.body).toStrictEqual("[]");
   });
 
   it("Should add user", async () => {

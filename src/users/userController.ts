@@ -3,66 +3,59 @@ import { v4 as uuidv4, validate as validateId } from "uuid";
 import { getState, setState } from "../utils";
 
 class UserController {
-  async addUser(user: UserType) {
-    const state = await getState();
-
+  async addUser(user: UserType, state: any) {
     const newUser = {
       id: uuidv4(),
       ...user,
     };
     state.push(newUser);
-    setState(state);
 
-    return { status: 201, msg: JSON.stringify(newUser) };
+    return { status: 201, msg: JSON.stringify(newUser), state };
   }
 
-  async getAllusers() {
-    const state = await getState();
-    return { status: 200, msg: JSON.stringify(state, null, 2) };
+  async getAllusers(state: any) {
+    return { status: 200, msg: JSON.stringify(state, null, 2), state };
   }
 
-  async getUserById(id: string) {
+  async getUserById(id: string, state: any) {
     if (!validateId(id)) {
-      return { status: 400, msg: "userId is invalid" };
+      return { status: 400, msg: "userId is invalid", state };
     }
 
-    const state = await getState();
     const user = state.find((user: UserType) => user.id === id);
     if (user) {
-      return { status: 200, msg: JSON.stringify(user, null, 2) };
+      return { status: 200, msg: JSON.stringify(user, null, 2), state };
     }
-    return { status: 404, msg: "user not found" };
+    return { status: 404, msg: "user not found", state };
   }
 
-  async removeUser(id: string) {
+  async removeUser(id: string, state: any) {
     if (!id) {
-      return { status: 400, msg: "ID required" };
+      return { status: 400, msg: "ID required", state };
     }
 
     if (!validateId(id)) {
-      return { status: 400, msg: "userId is invalid" };
+      return { status: 400, msg: "userId is invalid", state };
     }
 
-    const state = await getState();
     const user = state?.find((user: UserType) => user.id === id);
     if (!user) {
-      return { status: 404, msg: "user not found" };
+      return { status: 404, msg: "user not found", state };
     }
     const newState = state?.filter((user: UserType) => user.id !== id);
-    setState(newState);
 
-    return { status: 204, msg: "User deleted" };
+    return { status: 204, msg: "User deleted", state: newState };
   }
 
-  async updateUser(id: string, update: UserType) {
-    if (!id) return { status: 400, msg: "ID required" };
-    if (!validateId(id)) return { status: 400, msg: "userId is invalid" };
+  async updateUser(id: string, update: UserType, state: any) {
+    if (!id) return { status: 400, msg: "ID required", state };
+    if (!validateId(id)) return { status: 400, msg: "userId is invalid", state };
 
     if (update.age && typeof update.age !== "number") {
-      return { status: 400, msg: "age is not a number" };
+      return { status: 400, msg: "age is not a number", state };
     }
     if (update.username && typeof update.username !== "string") {
-      return { status: 400, msg: "username is not a string" };
+      return { status: 400, msg: "username is not a string", state };
     }
 
     if (update.hasOwnProperty("hobbies")) {
@@ -72,14 +65,12 @@ class UserController {
       }
 
       if (!isHobbiesValid || !Array.isArray(update.hobbies)) {
-        return { status: 400, msg: "hobbies is not an array of str" };
+        return { status: 400, msg: "hobbies is not an array of str", state };
       }
     }
 
-    const state = await getState();
-
     const user = state?.find((user: UserType) => user.id === id);
-    if (!user) return { status: 404, msg: "user not found" };
+    if (!user) return { status: 404, msg: "user not found", state };
 
     const newState = state.map((user: UserType) => {
       if (user.id === id) {
@@ -94,8 +85,7 @@ class UserController {
 
     const newUser = newState.find((user: UserType) => user.id === id);
 
-    await setState(newState);
-    return { status: 200, msg: JSON.stringify(newUser, null, 2) };
+    return { status: 200, msg: JSON.stringify(newUser, null, 2), state: newState };
   }
 }
 
