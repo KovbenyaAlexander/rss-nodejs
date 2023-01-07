@@ -1,6 +1,6 @@
-import { UserType } from "../types";
+import { IUser } from "../types";
 
-const isUserValid = (user: UserType) => {
+const isUserValid = (user: IUser) => {
   if (typeof user.username !== "string" || typeof user.age !== "number") {
     return false;
   }

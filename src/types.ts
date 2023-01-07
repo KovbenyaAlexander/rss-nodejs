@@ -1,17 +1,18 @@
-import userController from "./users/userController";
-
-export type UserType = {
+export interface IUser {
   id?: string;
   username: string;
   age: number;
   hobbies: string[];
-};
+}
 
-export type StateType = UserType[];
-
-export type messageType = {
+export interface IMessage {
   type: string;
-  body?: UserType | undefined;
-  url: string | undefined;
-  method: string | undefined;
-};
+  state?: IUser[];
+}
+
+export interface IRequest {
+  method: string;
+  url: string;
+  body: any;
+  type?: string;
+}

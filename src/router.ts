@@ -1,10 +1,10 @@
-import { messageType } from "./types";
+import { IUser, IRequest } from "./types";
 import UserController from "./users/userController";
 import { isUserValid } from "./users/userService";
 
-const router = async (message: any, state: any) => {
+const router = async (message: IRequest, state: IUser[]) => {
   const { method, url, body } = message;
-  const arr = url?.split("/").filter((s: any) => s !== "");
+  const arr = url?.split("/").filter((s) => s !== "");
   const [api, users, id, ...rest] = [...(arr || [])];
 
   if (`${api}/${users}` !== "api/users") {

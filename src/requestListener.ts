@@ -2,8 +2,9 @@ import cluster from "node:cluster";
 import { IncomingMessage, ServerResponse } from "http";
 import balancer from "./balancer/balancer";
 import router from "./router";
+import { IUser } from "./types";
 
-let devModState: any = [];
+let devModState: IUser[] = [];
 
 const requestListener = async function (req: IncomingMessage, res: ServerResponse) {
   let body: any = [];
@@ -29,23 +30,13 @@ const requestListener = async function (req: IncomingMessage, res: ServerRespons
       return;
     }
 
-    // if (cluster.workers && Object.entries(cluster.workers).length) {
-    //   for (const worker of Object.values(cluster.workers)) {
-    //     worker?.send({ type: "updateStateRequest" });
-    //   }
-    // }
-
-    // if (req.url && req.method) {
-    //   balancer({ body, url: req.url, method: req.method });
-    // }
-
     if (cluster.workers && Object.entries(cluster.workers).length) {
       if (req.url && req.method) {
         balancer({ body, url: req.url, method: req.method });
       }
       for (const worker of Object.values(cluster.workers)) {
         worker?.on("message", ({ status, msg, type }: { type: string; status: number; msg: string }) => {
-          if (type === "res") {
+          if (type === "response") {
             res.writeHead(status, { "Content-Type": "application/json" });
             res.end(msg);
           }

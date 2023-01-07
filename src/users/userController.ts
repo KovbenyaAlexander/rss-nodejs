@@ -1,9 +1,8 @@
-import { UserType } from "../types";
+import { IUser } from "../types";
 import { v4 as uuidv4, validate as validateId } from "uuid";
-import { getState, setState } from "../utils";
 
 class UserController {
-  async addUser(user: UserType, state: any) {
+  async addUser(user: IUser, state: IUser[]) {
     const newUser = {
       id: uuidv4(),
       ...user,
@@ -13,23 +12,23 @@ class UserController {
     return { status: 201, msg: JSON.stringify(newUser), state };
   }
 
-  async getAllusers(state: any) {
+  async getAllusers(state: IUser[]) {
     return { status: 200, msg: JSON.stringify(state, null, 2), state };
   }
 
-  async getUserById(id: string, state: any) {
+  async getUserById(id: string, state: IUser[]) {
     if (!validateId(id)) {
       return { status: 400, msg: "userId is invalid", state };
     }
 
-    const user = state.find((user: UserType) => user.id === id);
+    const user = state.find((user: IUser) => user.id === id);
     if (user) {
       return { status: 200, msg: JSON.stringify(user, null, 2), state };
     }
     return { status: 404, msg: "user not found", state };
   }
 
-  async removeUser(id: string, state: any) {
+  async removeUser(id: string, state: IUser[]) {
     if (!id) {
       return { status: 400, msg: "ID required", state };
     }
@@ -38,16 +37,16 @@ class UserController {
       return { status: 400, msg: "userId is invalid", state };
     }
 
-    const user = state?.find((user: UserType) => user.id === id);
+    const user = state?.find((user: IUser) => user.id === id);
     if (!user) {
       return { status: 404, msg: "user not found", state };
     }
-    const newState = state?.filter((user: UserType) => user.id !== id);
+    const newState = state?.filter((user: IUser) => user.id !== id);
 
     return { status: 204, msg: "User deleted", state: newState };
   }
 
-  async updateUser(id: string, update: UserType, state: any) {
+  async updateUser(id: string, update: IUser, state: IUser[]) {
     if (!id) return { status: 400, msg: "ID required", state };
     if (!validateId(id)) return { status: 400, msg: "userId is invalid", state };
 
@@ -69,10 +68,10 @@ class UserController {
       }
     }
 
-    const user = state?.find((user: UserType) => user.id === id);
+    const user = state?.find((user: IUser) => user.id === id);
     if (!user) return { status: 404, msg: "user not found", state };
 
-    const newState = state.map((user: UserType) => {
+    const newState = state.map((user: IUser) => {
       if (user.id === id) {
         return {
           ...user,
@@ -83,7 +82,7 @@ class UserController {
       }
     });
 
-    const newUser = newState.find((user: UserType) => user.id === id);
+    const newUser = newState.find((user: IUser) => user.id === id);
 
     return { status: 200, msg: JSON.stringify(newUser, null, 2), state: newState };
   }

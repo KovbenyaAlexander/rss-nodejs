@@ -2,9 +2,9 @@ import http from "http";
 import cluster from "cluster";
 import os from "os";
 import router from "./router";
-import { messageType, StateType } from "./types";
+import { IMessage, IUser, IRequest } from "./types";
 import { requestListener } from "./requestListener";
-import { parseArgs, createJSON } from "./utils";
+import { parseArgs } from "./utils";
 
 const PORT = Number(process.env.PORT) || 4000;
 export const app = http.createServer(requestListener);
@@ -16,16 +16,18 @@ const init = async () => {
       const cpus = os.cpus().length;
       app.listen(PORT, () => console.log(`Master is running on port ${PORT}`));
 
-      let state: StateType = [];
+      let state: IUser[] = [];
 
       for (let CURRENT_PORT = PORT + 1; CURRENT_PORT < PORT + cpus + 1; CURRENT_PORT++) {
         const worker = cluster.fork({ CURRENT_PORT });
-        worker.on("message", function (msg) {
+        worker.on("message", function (msg: IMessage) {
           if (msg.type === "getState") {
             worker.send({ type: "state", state });
           }
           if (msg.type === "updateState") {
-            state = msg.state;
+            if (msg.state) {
+              state = msg.state;
+            }
           }
         });
       }
@@ -34,14 +36,14 @@ const init = async () => {
       const workerId = cluster.worker?.id;
       app.listen(PORT, () => console.log(`Server on port ${PORT} || worker #${workerId}`));
 
-      process.on("message", async function (message: any) {
+      process.on("message", async function (message: IRequest) {
         if (message.type === "request") {
           process.send && process.send({ type: "getState" });
-          process.once("message", async function (message_: any) {
-            if (message_.type === "state") {
+          process.once("message", async function (message_: IMessage) {
+            if (message_.type === "state" && message_.state) {
               const { status, msg, state } = await router(message, message_.state);
               process.send && process.send({ type: "updateState", state });
-              process.send && process.send({ type: "res", status, msg });
+              process.send && process.send({ type: "response", status, msg });
             }
           });
         }
@@ -49,7 +51,6 @@ const init = async () => {
     }
   } else {
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-    await createJSON();
   }
 };
 
