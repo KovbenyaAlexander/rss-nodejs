@@ -17,13 +17,13 @@ describe("Test scenario 1", () => {
   it("Should get an empty db", async () => {
     const response = await testApi.get(LINK);
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual("[]");
+    expect(response.body).toStrictEqual([]);
   });
 
   it("should add user", async () => {
     const response = await testApi.post(LINK).send(JSON.stringify(newUser));
     expect(response.statusCode).toBe(201);
-    const body = JSON.parse(response.body);
+    const body = response.body;
 
     expect(body.age).toBe(newUser.age);
     expect(body.username).toBe(newUser.username);
@@ -36,7 +36,7 @@ describe("Test scenario 1", () => {
     const response = await testApi.get(`${LINK}/${userId}`);
     expect(response.statusCode).toBe(200);
 
-    const body = JSON.parse(response.body);
+    const body = response.body;
 
     const { id, ...user } = body;
     expect(newUser).toStrictEqual(user);
@@ -48,7 +48,7 @@ describe("Test scenario 1", () => {
     const response = await testApi.put(`${LINK}/${userId}`).send(JSON.stringify(userUpdate));
 
     expect(response.statusCode).toBe(200);
-    const body = JSON.parse(response.body);
+    const body = response.body;
     const { username, id, age, hobbies } = body;
 
     expect(username).toBe(userUpdate.username);
@@ -65,7 +65,7 @@ describe("Test scenario 1", () => {
   it("Should get an empty db", async () => {
     const response = await testApi.get(LINK);
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual("[]");
+    expect(response.body).toStrictEqual([]);
   });
 });
 
@@ -112,25 +112,25 @@ describe("Test scenario 3", () => {
   it("Should get empty users arr", async () => {
     const response = await testApi.get(`${LINK}`);
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual("[]");
+    expect(response.body).toStrictEqual([]);
   });
 
   it("Should add user", async () => {
     const response = await testApi.post(LINK).send(JSON.stringify(newUser));
     expect(response.statusCode).toBe(201);
-    userIDs.push(JSON.parse(response.body).id);
+    userIDs.push(response.body.id);
   });
 
   it("Should add user", async () => {
     const response = await testApi.post(LINK).send(JSON.stringify(newUser));
     expect(response.statusCode).toBe(201);
-    userIDs.push(JSON.parse(response.body).id);
+    userIDs.push(response.body.id);
   });
 
   it("Should get 2 users", async () => {
     const response = await testApi.get(`${LINK}`);
     expect(response.statusCode).toBe(200);
-    expect(JSON.parse(response.body).length).toBe(2);
+    expect(response.body.length).toBe(2);
   });
 
   it("Should remove user", async () => {
@@ -148,6 +148,6 @@ describe("Test scenario 3", () => {
   it("Should get empty users arr", async () => {
     const response = await testApi.get(`${LINK}`);
     expect(response.statusCode).toBe(200);
-    expect(response.body).toBe("[]");
+    expect(response.body).toStrictEqual([]);
   });
 });

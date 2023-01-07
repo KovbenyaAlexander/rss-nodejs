@@ -4,7 +4,7 @@ import balancer from "./balancer/balancer";
 import router from "./router";
 import { IUser } from "./types";
 
-let devModState: IUser[] = [];
+let developmentState: IUser[] = [];
 
 const requestListener = async function (req: IncomingMessage, res: ServerResponse) {
   let body: any = [];
@@ -43,8 +43,8 @@ const requestListener = async function (req: IncomingMessage, res: ServerRespons
         });
       }
     } else {
-      const { status, msg, state } = await router({ body, url: req.url, method: req.method }, devModState);
-      devModState = state;
+      const { status, msg, state } = await router({ body, url: req.url, method: req.method }, developmentState);
+      developmentState = state;
       res.writeHead(status, { "Content-Type": "application/json" });
       res.end(JSON.stringify(msg));
     }
