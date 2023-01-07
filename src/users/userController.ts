@@ -68,6 +68,10 @@ class UserController {
       }
     }
 
+    if (!update.age || !update.hobbies || !update.username) {
+      return { status: 400, msg: "user must have username, age and hobbies", state };
+    }
+
     const user = state?.find((user: IUser) => user.id === id);
     if (!user) return { status: 404, msg: "user not found", state };
 

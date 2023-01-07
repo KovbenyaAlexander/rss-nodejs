@@ -42,16 +42,18 @@ describe("Test scenario 1", () => {
     expect(newUser).toStrictEqual(user);
   });
 
-  it("Should update username", async () => {
-    const userUpdate = { username: "new name" };
+  it("Should update user", async () => {
+    const userUpdate = { username: "new name", age: 55555, hobbies: ["AAA"] };
 
     const response = await testApi.put(`${LINK}/${userId}`).send(JSON.stringify(userUpdate));
 
     expect(response.statusCode).toBe(200);
     const body = JSON.parse(response.body);
-    const { username, id } = body;
+    const { username, id, age, hobbies } = body;
 
     expect(username).toBe(userUpdate.username);
+    expect(age).toBe(userUpdate.age);
+    expect(hobbies).toStrictEqual(userUpdate.hobbies);
     expect(userId).toBe(id);
   });
 
@@ -89,7 +91,7 @@ describe("Test scenario 2", () => {
   });
 
   it("Should get status 404 if user not found - PUT", async () => {
-    const response = await testApi.put(`${LINK}/${VALID_ID_EXAMPLE}`).send(JSON.stringify({ age: 111 }));
+    const response = await testApi.put(`${LINK}/${VALID_ID_EXAMPLE}`).send(JSON.stringify(newUser));
     expect(response.statusCode).toBe(404);
   });
 
