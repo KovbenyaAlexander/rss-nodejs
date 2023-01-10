@@ -38,7 +38,7 @@ const requestListener = async function (req: IncomingMessage, res: ServerRespons
         worker?.on("message", ({ status, msg, type }: { type: string; status: number; msg: string }) => {
           if (type === "response") {
             res.writeHead(status, { "Content-Type": "application/json" });
-            res.end(msg);
+            res.end(JSON.stringify(msg));
           }
         });
       }
