@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:balancer": "npx nodemon --balancer true",
+    "start:multi": "npx nodemon --balancer true",
     "start:dev": "npx nodemon",
     "start:prod": "npx tsc && npx node ./build/index.js",
     "lint": "npx eslint ./src",
