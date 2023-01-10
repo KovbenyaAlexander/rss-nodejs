@@ -18,32 +18,32 @@ class UserController {
 
   async getUserById(id: string, state: IUser[]) {
     if (!validateId(id)) {
-      return { status: 400, msg: { message: "userId is invalid" }, state };
+      return { status: 400, msg: "userId is invalid", state };
     }
 
     const user = state.find((user: IUser) => user.id === id);
     if (user) {
       return { status: 200, msg: user, state };
     }
-    return { status: 404, msg: { message: "user not found" }, state };
+    return { status: 404, msg: "user not found", state };
   }
 
   async removeUser(id: string, state: IUser[]) {
     if (!id) {
-      return { status: 400, msg: { message: "ID required" }, state };
+      return { status: 400, msg: "ID required", state };
     }
 
     if (!validateId(id)) {
-      return { status: 400, msg: { message: "userId is invalid" }, state };
+      return { status: 400, msg: "userId is invalid", state };
     }
 
     const user = state?.find((user: IUser) => user.id === id);
     if (!user) {
-      return { status: 404, msg: { message: "user not found" }, state };
+      return { status: 404, msg: "user not found", state };
     }
     const newState = state?.filter((user: IUser) => user.id !== id);
 
-    return { status: 204, msg: { message: "User deleted" }, state: newState };
+    return { status: 204, msg: "User deleted", state: newState };
   }
 
   async updateUser(id: string, update: IUser, state: IUser[]) {
@@ -51,10 +51,10 @@ class UserController {
     if (!validateId(id)) return { status: 400, msg: "userId is invalid", state };
 
     if (update.age && typeof update.age !== "number") {
-      return { status: 400, msg: { message: "age is not a number" }, state };
+      return { status: 400, msg: "age is not a number", state };
     }
     if (update.username && typeof update.username !== "string") {
-      return { status: 400, msg: { message: "username is not a string" }, state };
+      return { status: 400, msg: "username is not a string", state };
     }
 
     if (update.hasOwnProperty("hobbies")) {
@@ -64,16 +64,16 @@ class UserController {
       }
 
       if (!isHobbiesValid || !Array.isArray(update.hobbies)) {
-        return { status: 400, msg: { message: "hobbies is not an array of str" }, state };
+        return { status: 400, msg: "hobbies is not an array of str", state };
       }
     }
 
-    if (!update.age || !update.hobbies || !update.username) {
-      return { status: 400, msg: { message: "user must have username, age and hobbies" }, state };
+    if ((!update.age && update.age !== 0) || !update.hobbies || !update.username) {
+      return { status: 400, msg: "user must have username, age and hobbies", state };
     }
 
     const user = state?.find((user: IUser) => user.id === id);
-    if (!user) return { status: 404, msg: { message: "user not found" }, state };
+    if (!user) return { status: 404, msg: "user not found", state };
 
     const newState = state.map((user: IUser) => {
       if (user.id === id) {
